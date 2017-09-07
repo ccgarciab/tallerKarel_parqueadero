@@ -19,13 +19,6 @@ public class Carro {
         this.placa = placa;
         this.tiempoInicial = 0;
     }
-    //pruebas
-    public Carro(City ciudad){
-        this.ciudad = ciudad;
-        this.karel = new Robot(this.ciudad, 0, 0, Direction.NORTH);
-        this.placa = 0;
-        this.tiempoInicial = 0;
-    }
     
 
     public int getPlaca(){
@@ -36,6 +29,13 @@ public class Carro {
         return this.tiempoInicial;
     }
     
+    public int getColumna(){
+        return this.columna;
+    }
+    
+    public int getSeccion(){
+        return this.seccion;
+    }
     
     //permite girar a la izquierda n veces. Mejora la lectura del codigo
     public void girarVeces(int veces){
@@ -54,6 +54,13 @@ public class Carro {
         this.tiempoInicial = System.nanoTime();
     }
     
+    //retorna la diferencia entre el tiempo inicial y el tiempo actual, en segundos
+    public double getTiempoTotal(){
+        double tiempoTotal = (double)(this.tiempoInicial-System.nanoTime());
+        return tiempoTotal/1000000.0;
+    }
+    
+    
     //mueve el robot a la celda que se le indica, en el parqueadero hecho de obj Wall
     //tambien registra el tiempo del sistema en el que se ingreso a la celda
     public void ingresarKarel(int columna, int seccion){
@@ -64,18 +71,48 @@ public class Carro {
         this.karel.move();
         this.girarVeces(2);
         this.iniciarCronometro();
+        this.columna = columna;
+        this.seccion = seccion;
     }
-    //en desarrollo
-    public void zonaTempKarel(int columna, int seccion){
+    
+    //envia un carro desde una seccion y columna a cierta casilla de la zona temporal
+    public void ingresarZonaTempKarel(int seccionTemp){
         this.karel.move();
         this.girarVeces(3);
-        this.moverVeces(placa);
+        this.moverVeces(this.layout.getCarrosPorColumna()-this.seccion+1);
+        this.karel.turnLeft();
+        this.moverVeces(((this.layout.getNumeroColumnas()-this.columna)*2)+1);
+        this.karel.turnLeft();
+        this.moverVeces(this.layout.getCarrosPorColumna()-(seccionTemp+1));
+    }
+    
+    //regresa un carro desde cierta casilla de la zona temporal a la pricipal
+    public void regresaDeZonaTempKarel(int seccionTemp, int nuevaCol, int nuevaSec){
+        this.girarVeces(2);
+        this.moverVeces(this.layout.getCarrosPorColumna()-(seccionTemp+1));
+        this.girarVeces(3);
+        this.moverVeces(((this.layout.getNumeroColumnas()-nuevaCol)*2)+1);
+        this.girarVeces(3);
+        this.moverVeces(this.layout.getCarrosPorColumna()-nuevaSec);
+        this.karel.move();
+        this.karel.turnLeft();
+        this.karel.move();
+        this.girarVeces(2);
+    }
+    
+    public void sacarKarel(){
+        this.karel.move();
+        this.girarVeces(3);
+        this.moverVeces(this.layout.getCarrosPorColumna()-this.seccion+1);
+        this.karel.turnLeft();
+        this.moverVeces(((this.layout.getNumeroColumnas()-this.columna)*2)+3);
+        this.karel = null;
     }
     
     private Layout layout;
     private int placa;
     private Robot karel;
     private long tiempoInicial;
-    //pruebas
-    private City ciudad;
+    private int columna;
+    private int seccion;
 }

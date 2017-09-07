@@ -21,12 +21,12 @@ public class TallerParqueadero_Karel {
         ly.showLayout();
         Carro cr = new Carro(ly, 123);
         Parking pking = new Parking(ly);
-        if(pking.ingresarCarro(cr, 0, 0)){
-            System.out.println("ye");
-        }
-        else{
-            System.out.println("nah");
-        }
+        pking.ingresarCarro(cr);
+        Carro cr1 = new Carro(ly, 124);
+        pking.ingresarCarro(cr1);
+        Carro cr2 = new Carro(ly, 125);
+        pking.ingresarCarro(cr2);
+        System.out.println("El tiempo de estadia fue "+pking.sacarCarro(123));
     }
     
 }
