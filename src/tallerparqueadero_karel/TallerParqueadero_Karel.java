@@ -24,18 +24,18 @@ public class TallerParqueadero_Karel {
         City bogota = new City();
         Layout ly = new Layout(bogota);
         int tamañoTotal=ly.getNumeroColumnas()*ly.getCarrosPorColumna();
-        Carro[] arregloCarros = new Carro[tamañoTotal+1];  
+        Carro[] arregloCarros = new Carro[tamañoTotal*2];  
         ly.showLayout();
         Parking pking = new Parking(ly);
-        int costoSegundo = 6;
+        double costoSegundo = 0.5;
         
         Scanner in = new Scanner(System.in);
         int indicador;
         int contador = 0;
         boolean seguir = true;
         int opcion;
-        double recaudo;
-        double recaudoDiario = 0;
+        int recaudo;
+        int recaudoDiario = 0;
         while(seguir){
             System.out.println("Que quieres hacer?");
             System.out.println("1. ingresar carro");
@@ -58,7 +58,7 @@ public class TallerParqueadero_Karel {
                         break;
                 case 2: System.out.println("Por favor indique la placa del carro ");
                         indicador = in.nextInt();
-                        recaudo= pking.sacarCarro(indicador)*costoSegundo;
+                        recaudo= (int)(pking.sacarCarro(indicador)*costoSegundo);
                         if(recaudo != 0){
                             System.out.println("Se pago $"+recaudo);
                             recaudoDiario=recaudoDiario+recaudo;

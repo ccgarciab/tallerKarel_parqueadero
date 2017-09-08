@@ -57,7 +57,7 @@ public class Parking {
         if(columna<=this.layout.getNumeroColumnas() && 
                 seccion<=this.layout.getCarrosPorColumna() && 
                 columna>0 && seccion>0 && this.arregloCarros[columna-1][seccion-1]==null){
-            /*carro.ingresarKarel(int, int) mueve el carro en la reppresentacion grafica
+            /*carro.ingresarKarel(int, int) mueve el carro en la representacion grafica
             tambien registra el tiempo inicial de entrada y la columna/seccion a la que ingreso*/
             carro.ingresarKarel(columna, seccion);
             this.arregloCarros[columna-1][seccion-1]=carro;
@@ -91,22 +91,26 @@ public class Parking {
         int columna = this.getLugar_Placa(placa)[0];
         int seccion = this.getLugar_Placa(placa)[1];
         double tiempoTotal = 0;
+        //si la columna o seccion son 0, se entiende que no se encontro el carro
         if(columna<=this.layout.getNumeroColumnas() && 
                 seccion<=this.layout.getCarrosPorColumna() && 
                 columna>0 && seccion>0 && this.arregloCarros[columna-1][seccion-1]!=null){
+            //se reducen las variables para se usadas como indices que comienzan con 0
             columna--;
             seccion--;
+            //un contador para llevar la cuenta de cual casilla de la seccion temporal se esta usando
             int indiceTemp=0;
+            //para todos los carros que estan al frente del que queremos sacar, en la misma fila
             for(int i=this.layout.getCarrosPorColumna()-1; i>seccion; i--){
                 if(this.arregloCarros[columna][i]!=null){
                     this.arregloCarros[columna][i].ingresarZonaTempKarel(indiceTemp);
                     this.zonaTemp[indiceTemp]=this.arregloCarros[columna][i];
                     this.arregloCarros[columna][i]=null;
+                    //en la siguiente iteracion se ocupara la siguiente casilla de la zona temporal
                     indiceTemp++;
                 }
             }
-            System.out.println("indice temporal "+indiceTemp);
-            tiempoTotal=this.arregloCarros[columna][seccion].getTiempoTotal();
+            tiempoTotal = this.arregloCarros[columna][seccion].getTiempoTotal();
             this.arregloCarros[columna][seccion].sacarKarel();
             this.arregloCarros[columna][seccion] = null;
             int contadorSeccion = 1;
@@ -123,7 +127,7 @@ public class Parking {
         return tiempoTotal;
     }
     
-    
+    //imprime las placas de los carros en una columna
     public boolean mostrarSeccion(int seccion){
         boolean exito = false;
         if(seccion<this.layout.getNumeroColumnas()){

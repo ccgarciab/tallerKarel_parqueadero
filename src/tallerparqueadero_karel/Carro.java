@@ -18,6 +18,8 @@ public class Carro {
                 layout.getxInicial()+(layout.getNumeroColumnas()*2)+1, Direction.WEST);
         this.placa = placa;
         this.tiempoInicial = 0;
+        this.columna = 0;
+        this.seccion = 0;
     }
     
 
@@ -75,7 +77,7 @@ public class Carro {
         this.seccion = seccion;
     }
     
-    //envia un carro desde una seccion y columna a cierta casilla de la zona temporal
+    //envia un robot desde una seccion y columna a cierta casilla de la zona temporal
     public void ingresarZonaTempKarel(int seccionTemp){
         this.karel.move();
         this.girarVeces(3);
@@ -86,7 +88,7 @@ public class Carro {
         this.moverVeces(this.layout.getCarrosPorColumna()-(seccionTemp+1));
     }
     
-    //regresa un carro desde cierta casilla de la zona temporal a la pricipal
+    //regresa un robot desde cierta casilla de la zona temporal a la pricipal
     public void regresaDeZonaTempKarel(int seccionTemp, int nuevaCol, int nuevaSec){
         this.girarVeces(2);
         this.moverVeces(this.layout.getCarrosPorColumna()-(seccionTemp+1));
@@ -102,6 +104,7 @@ public class Carro {
         this.seccion = nuevaSec;
     }
     
+    //retira el robot de el parqueadero hecho de objetos Wall
     public void sacarKarel(){
         this.karel.move();
         this.girarVeces(3);
