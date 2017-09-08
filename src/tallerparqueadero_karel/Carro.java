@@ -98,6 +98,8 @@ public class Carro {
         this.karel.turnLeft();
         this.karel.move();
         this.girarVeces(2);
+        this.columna = nuevaCol;
+        this.seccion = nuevaSec;
     }
     
     public void sacarKarel(){

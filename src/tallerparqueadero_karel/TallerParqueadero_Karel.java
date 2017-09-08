@@ -62,6 +62,7 @@ public class TallerParqueadero_Karel {
                         if(recaudo != 0){
                             System.out.println("Se pago $"+recaudo);
                             recaudoDiario=recaudoDiario+recaudo;
+                            contador--;
                         }
                         else{
                             System.out.println("No se ha encontrado la placa, o ha ocurrido un error");

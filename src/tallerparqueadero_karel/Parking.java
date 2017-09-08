@@ -105,13 +105,15 @@ public class Parking {
                     indiceTemp++;
                 }
             }
+            System.out.println("indice temporal "+indiceTemp);
             tiempoTotal=this.arregloCarros[columna][seccion].getTiempoTotal();
             this.arregloCarros[columna][seccion].sacarKarel();
             this.arregloCarros[columna][seccion] = null;
             int contadorSeccion = 1;
+            int restantes = this.getCarrosActualmenteCol(columna);
             for(int i=this.layout.getCarrosPorColumna()-2; i>=0; i--){
                 if(this.zonaTemp[i] != null){
-                    this.zonaTemp[i].regresaDeZonaTempKarel(i, columna+1, contadorSeccion);
+                    this.zonaTemp[i].regresaDeZonaTempKarel(i, columna+1, restantes+contadorSeccion);
                     this.arregloCarros[columna][contadorSeccion-1] = zonaTemp[i];
                     zonaTemp[i] = null;
                     ++contadorSeccion;
