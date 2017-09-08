@@ -135,8 +135,8 @@ public class Parking {
     //imprime las placas de los carros en una columna
     public boolean mostrarSeccion(int seccion){
         boolean exito = false;
-        seccion--;
-        if(seccion<=this.layout.getNumeroColumnas()){
+        if(seccion<=this.layout.getNumeroColumnas() && seccion>0){
+            seccion--;
             for(int i=0; i<this.layout.getCarrosPorColumna(); i++){
                 if(this.arregloCarros[seccion][i] != null){
                     System.out.println("Carro "+(i+1)+": "+this.arregloCarros[seccion][i].getPlaca());
