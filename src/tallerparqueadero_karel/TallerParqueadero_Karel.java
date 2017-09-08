@@ -45,6 +45,13 @@ public class TallerParqueadero_Karel {
             System.out.println("5. reiniciar el dia");
             opcion = in.nextInt();
             switch(opcion){
+                case 0: for(int i=0; i<tamañoTotal; i++){   //llenar el parqueadero: debugging
+                            arregloCarros[i] = crearCarro(ly, i);
+                            if(!(pking.ingresarCarro(arregloCarros[i]))){
+                                System.out.println("No hay espacio, o ha ocurrido un error");
+                                }
+                            }
+                            break;
                 case 1: System.out.println("Por favor indique la placa del carro ");
                         indicador = in.nextInt();
                         arregloCarros[contador] = crearCarro(ly, indicador);

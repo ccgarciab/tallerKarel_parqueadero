@@ -102,10 +102,10 @@ public class Parking {
             int indiceTemp=0;
             //para todos los carros que estan al frente del que queremos sacar, en la misma fila
             for(int i=this.layout.getCarrosPorColumna()-1; i>seccion; i--){
-                if(this.arregloCarros[columna][i]!=null){
+                if(this.arregloCarros[columna][i] != null){
                     this.arregloCarros[columna][i].ingresarZonaTempKarel(indiceTemp);
                     this.zonaTemp[indiceTemp]=this.arregloCarros[columna][i];
-                    this.arregloCarros[columna][i]=null;
+                    this.arregloCarros[columna][i] = null;
                     //en la siguiente iteracion se ocupara la siguiente casilla de la zona temporal
                     indiceTemp++;
                 }
@@ -114,12 +114,17 @@ public class Parking {
             this.arregloCarros[columna][seccion].sacarKarel();
             this.arregloCarros[columna][seccion] = null;
             int contadorSeccion = 1;
+            //se nececita saber cuantos carros no se movieron para dejar pasar al que sacabamos
             int restantes = this.getCarrosActualmenteCol(columna);
             for(int i=this.layout.getCarrosPorColumna()-2; i>=0; i--){
                 if(this.zonaTemp[i] != null){
+                    /*el desplazamiento de la zona temporal a la principal depende de
+                        los carros que aun permanezcan en la seccion, y tambien de que
+                        los ubicaremos en orden ascendente*/
                     this.zonaTemp[i].regresaDeZonaTempKarel(i, columna+1, restantes+contadorSeccion);
-                    this.arregloCarros[columna][contadorSeccion-1] = zonaTemp[i];
+                    this.arregloCarros[columna][restantes+contadorSeccion-1] = zonaTemp[i];
                     zonaTemp[i] = null;
+                    //se van ubicando en secciones de numero superior
                     ++contadorSeccion;
                 }
             }
@@ -130,10 +135,15 @@ public class Parking {
     //imprime las placas de los carros en una columna
     public boolean mostrarSeccion(int seccion){
         boolean exito = false;
-        if(seccion<this.layout.getNumeroColumnas()){
+        seccion--;
+        if(seccion<=this.layout.getNumeroColumnas()){
             for(int i=0; i<this.layout.getCarrosPorColumna(); i++){
                 if(this.arregloCarros[seccion][i] != null){
                     System.out.println("Carro "+(i+1)+": "+this.arregloCarros[seccion][i].getPlaca());
+                    System.out.println("En la columna "+this.arregloCarros[seccion][i].getColumna()+
+                                        " y la seccion "+this.arregloCarros[seccion][i].getSeccion());
+                    System.out.println("Lleva "+(int)(this.arregloCarros[seccion][i].getTiempoTotal())+
+                                        " segundos en el parqueadero");
                 }
             }
             exito = true;
