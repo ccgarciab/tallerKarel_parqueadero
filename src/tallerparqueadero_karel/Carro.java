@@ -56,8 +56,8 @@ public class Carro {
     
     //retorna la diferencia entre el tiempo inicial y el tiempo actual, en segundos
     public double getTiempoTotal(){
-        double tiempoTotal = (double)(this.tiempoInicial-System.nanoTime());
-        return tiempoTotal/1000000.0;
+        double tiempoTotal = (double)(System.nanoTime()-this.tiempoInicial);
+        return tiempoTotal/1000000000.0;
     }
     
     
